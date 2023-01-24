@@ -66,12 +66,14 @@ const ProfileForm = ({Preimage}) => {
       /* error */,
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          const desertRef = ref(storage, Preimage);
-          deleteObject(desertRef).then(() => {
-            console.log("deleted");
-          }).catch((error) => {
-            console.log(error);
-          });
+          if (Preimage) {
+            const desertRef = ref(storage, Preimage);
+            deleteObject(desertRef).then(() => {
+              console.log("deleted");
+            }).catch((error) => {
+              console.log(error);
+            });
+          }
           onSuccess(null, downloadURL);
         });
       }
