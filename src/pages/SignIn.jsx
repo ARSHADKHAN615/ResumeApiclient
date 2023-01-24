@@ -26,7 +26,8 @@ const SignIn = () => {
       queryClient.invalidateQueries("resume");
       dispatch(loginSuccess(res.data));
       setLoadingForGoogle(false);
-      window.location.href = "/dashboard";
+      // window.location.href = "/dashboard";
+      navigate("/dashboard");
     } catch (error) {
       dispatch(loginFailed());
       message.error(error.message.split(":")[1]);
@@ -42,7 +43,8 @@ const SignIn = () => {
       queryClient.invalidateQueries("resume");
       dispatch(loginSuccess(data.data));
       message.success("Login successful");
-      window.location.href = "/dashboard";
+      // window.location.href = "/dashboard";
+      navigate("/dashboard");
     },
     onError: (error) => {
       dispatch(loginFailed());
