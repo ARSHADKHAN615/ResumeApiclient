@@ -18,6 +18,7 @@ export const authSlice = createSlice({
       state.currentUser = null;
     },
     logout: (state) => {
+      document.cookie = "access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
       return initialState;
     },
   },

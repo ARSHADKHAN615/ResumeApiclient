@@ -17,7 +17,7 @@ import {
   FloatButton,
   Tour,
 } from "antd";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import AppContent from "../components/AppContent";
 import { useDispatch, useSelector } from "react-redux";
 import { api } from "../api";
@@ -41,18 +41,18 @@ const LayoutComponent = () => {
 
   const steps = [
     {
-      title: "Upload File",
-      description: "Put your files here.",
+      title: "Dashboard",
+      description: "Edit your Resume here.",
       target: () => ref1.current,
     },
     {
-      title: "Save",
-      description: "Save your changes.",
+      title: "Get API",
+      description: "Generate your API key here.",
       target: () => ref2.current,
     },
     {
-      title: "Other Actions",
-      description: "Click to see other actions.",
+      title: "User Profile",
+      description: "Hover over the avatar to see your Menu.",
       target: () => ref3.current,
     },
   ];
@@ -89,14 +89,14 @@ const LayoutComponent = () => {
       }}
     >
       <Layout style={{ minHeight: "100vh" }}>
-        <Sider breakpoint="lg" collapsedWidth="0">
+        <Sider breakpoint="lg" collapsedWidth="0" >
           <div className="logo">
             <h1> AK Resume</h1>
           </div>
           <Menu
             theme="dark"
             mode="inline"
-            defaultSelectedKeys={["1"]}
+            defaultSelectedKeys={ useLocation().pathname === "/dashboard" ? ["1"] : ["2"]}
             items={NavItems}
           />
         </Sider>
@@ -128,8 +128,8 @@ const LayoutComponent = () => {
                         if (res.status === 200) {
                           dispatch(logout());
                           document.cookie = "access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-                          // window.location.href = "/sign-in";
-                          navigate("/sign-in");
+                          window.location.href = "/sign-in";
+                          // navigate("/sign-in");
                         }
                       })
                       .catch((err) => console.log(err));

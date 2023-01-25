@@ -9,15 +9,15 @@ const CoursesForm = () => {
       <Title level={3}>Add your Courses</Title>
       <Form.List
         name="courses"
-        rules={[
-          {
-            validator: async (_, education) => {
-              if (!education || education.length < 2) {
-                return Promise.reject(new Error("At least 2 courses"));
-              }
-            },
-          },
-        ]}
+        // rules={[
+        //   {
+        //     validator: async (_, education) => {
+        //       if (!education || education.length < 2) {
+        //         return Promise.reject(new Error("At least 2 courses"));
+        //       }
+        //     },
+        //   },
+        // ]}
       >
         {(fields, { add, remove }, { errors }) => (
           <>

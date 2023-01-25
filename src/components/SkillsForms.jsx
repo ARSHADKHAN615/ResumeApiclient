@@ -2,7 +2,7 @@ import { Form, Select } from "antd";
 import { InfoCircleOutlined } from "@ant-design/icons";
 import React from "react";
 const SkillsForms = () => {
-  const options = ["HTML", "CSS", "JavaScript", "React", "Node", "MongoDB"].map((skill) => ({ label: skill, value: skill }));
+  const options = ["HTML", "CSS", "JavaScript", "React", "NodeJs", "MongoDB","Laravel","MySql"].map((skill) => ({ label: skill, value: skill }));
   
   return (
     <Form.Item

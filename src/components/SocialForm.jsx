@@ -30,20 +30,22 @@ const SocialForm = () => {
         {(fields, { add, remove }, { errors }) => (
           <>
             {fields.map(({ key, name, ...restField }) => (
-              <Space
+              <div
                 key={key}
                 style={{
                   display: "flex",
                   marginBottom: 8,
                   alignItems: "center",
+                  justifyContent: "space-between",
+                  flexWrap: "wrap",
                   width: "100%",
                   padding: "1rem",
                   borderRadius: "0.5rem",
                   boxShadow : "0 0 8px rgba(13, 12, 12, 0.15)"
                 }}
-                align="baseline"
-                size="large"
-                wrap
+                // align="baseline"
+                // size="large"
+                // wrap
               >
                 <Form.Item
                   {...restField}
@@ -55,6 +57,7 @@ const SocialForm = () => {
                       message: "Social Media Name is required",
                     },
                   ]}
+                  style={{ width: "30%" }}
                 >
                   <Select
                     showSearch
@@ -79,12 +82,13 @@ const SocialForm = () => {
                       message: "Social Media Link is required",
                     },
                   ]}
+                  style={{ width: "60%" }}
                 >
                   <Input placeholder="Social Media Link" />
                 </Form.Item>
 
                 <MinusCircleOutlined onClick={() => remove(name)} />
-              </Space>
+              </div>
             ))}
             <Form.Item>
               <Button

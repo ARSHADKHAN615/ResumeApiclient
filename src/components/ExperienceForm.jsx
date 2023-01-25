@@ -8,15 +8,15 @@ const ExperienceForm = () => {
     <>
       <Form.List
         name="experience"
-        rules={[
-          {
-            validator: async (_, experience) => {
-              if (!experience || experience.length < 2) {
-                return Promise.reject(new Error("At least 2 experience"));
-              }
-            },
-          },
-        ]}
+        // rules={[
+        //   {
+        //     validator: async (_, experience) => {
+        //       if (!experience || experience.length < 2) {
+        //         return Promise.reject(new Error("At least 2 experience"));
+        //       }
+        //     },
+        //   },
+        // ]}
       >
         {(fields, { add, remove }, { errors }) => (
           <>

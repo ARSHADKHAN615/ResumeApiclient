@@ -5,7 +5,7 @@ import { Navigate } from "react-router-dom";
 const AuthWrap = ({ children }) => {
   const AuthUser = useSelector((state) => state.auth.currentUser);
 
-  return <>{AuthUser ? children : <Navigate to="/sign-in" replace />}</>;
+  return <>{AuthUser ? children : window.location.replace("/sign-in")}</>;
 };
 
 export default AuthWrap;

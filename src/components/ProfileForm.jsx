@@ -9,6 +9,8 @@ import {
   getDownloadURL,
   deleteObject,
 } from "firebase/storage";
+import ReactQuill from "react-quill";
+import 'react-quill/dist/quill.snow.css';
 const { TextArea } = Input;
 
 const getBase64 = (img, callback) => {
@@ -162,7 +164,8 @@ const ProfileForm = ({Preimage}) => {
           },
         ]}
       >
-        <TextArea showCount maxLength={200} />
+        <ReactQuill theme="snow"  />
+        {/* <TextArea showCount maxLength={200} /> */}
       </Form.Item>
     </>
   );

@@ -47,7 +47,8 @@ const Home = () => {
     onError: (error) => {
       message.error(error.response.data.message);
       dispatch(logout());
-      navigate("/sign-in");
+      // navigate("/sign-in");
+      window.location.replace("/sign-in");
     },
     retry: false,
   });

@@ -23,11 +23,11 @@ const SignIn = () => {
         email: result.user.email,
         img: result.user.photoURL,
       });
-      queryClient.invalidateQueries("resume");
+      // queryClient.invalidateQueries("resume");
       dispatch(loginSuccess(res.data));
       setLoadingForGoogle(false);
-      // window.location.href = "/dashboard";
-      navigate("/dashboard");
+      window.location.href = "/dashboard";
+      // navigate("/dashboard");
     } catch (error) {
       dispatch(loginFailed());
       message.error(error.message.split(":")[1]);
@@ -40,11 +40,11 @@ const SignIn = () => {
       return await api.post("auth/sign-in", formData);
     },
     onSuccess: (data) => {
-      queryClient.invalidateQueries("resume");
+      // queryClient.invalidateQueries("resume");
       dispatch(loginSuccess(data.data));
       message.success("Login successful");
-      // window.location.href = "/dashboard";
-      navigate("/dashboard");
+      window.location.href = "/dashboard";
+      // navigate("/dashboard");
     },
     onError: (error) => {
       dispatch(loginFailed());
