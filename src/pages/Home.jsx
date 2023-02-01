@@ -67,6 +67,7 @@ const Home = () => {
   });
 
   const onFinish = (values) => {
+    console.log("Success:", values);
     UpdateResume(values);
   };
   const onFinishFailed = (errorInfo) => {

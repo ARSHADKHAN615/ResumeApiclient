@@ -14,7 +14,7 @@ const SocialForm = () => {
   ]
   return (
     <>
-      <Title level={3}>Add your Social Links</Title>
+      <Title level={3}>Social Links</Title>
       <Form.List
         name="social"
         rules={[
@@ -41,11 +41,10 @@ const SocialForm = () => {
                   width: "100%",
                   padding: "1rem",
                   borderRadius: "0.5rem",
-                  boxShadow : "0 0 8px rgba(13, 12, 12, 0.15)"
+                  boxShadow: "0 0 8px rgba(13, 12, 12, 0.15)",
+                  position: "relative",
+                  backgroundColor: "#fff",
                 }}
-                // align="baseline"
-                // size="large"
-                // wrap
               >
                 <Form.Item
                   {...restField}
@@ -81,26 +80,32 @@ const SocialForm = () => {
                       required: true,
                       message: "Social Media Link is required",
                     },
+                    {
+                      type: "url",
+                      message: "Please Enter a valid URL!",
+                    }
                   ]}
                   style={{ width: "60%" }}
                 >
                   <Input placeholder="Social Media Link" />
                 </Form.Item>
 
-                <MinusCircleOutlined onClick={() => remove(name)} />
+                <MinusCircleOutlined onClick={() => remove(name)} style={{ position: "absolute", borderLeft: "1px solid #ccc",borderBottom: "1px solid #ccc", padding: "0.5rem", borderBottomLeftRadius: "0.5rem", top: 0, right: 0, cursor: "pointer", color: "#f5222d" }} />
               </div>
             ))}
-            <Form.Item>
-              <Button
-                type="dashed"
-                onClick={() => add()}
-                block
-                icon={<PlusOutlined />}
-              >
-                Add field
-              </Button>
-              <Form.ErrorList errors={errors} />
-            </Form.Item>
+            {fields.length < 5 && (
+              <Form.Item>
+                <Button
+                  type="dashed"
+                  onClick={() => add()}
+                  block
+                  icon={<PlusOutlined />}
+                >
+                  Add field
+                </Button>
+                <Form.ErrorList errors={errors} />
+              </Form.Item>
+            )}
           </>
         )}
       </Form.List>

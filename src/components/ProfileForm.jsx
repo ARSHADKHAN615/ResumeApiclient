@@ -9,9 +9,8 @@ import {
   getDownloadURL,
   deleteObject,
 } from "firebase/storage";
-import ReactQuill from "react-quill";
-import 'react-quill/dist/quill.snow.css';
-const { TextArea } = Input;
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 const getBase64 = (img, callback) => {
   const reader = new FileReader();
@@ -30,11 +29,11 @@ const beforeUpload = (file) => {
   return isJpgOrPng && isLt2M;
 };
 
-
-
-const ProfileForm = ({Preimage}) => {
+const ProfileForm = ({ Preimage }) => {
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState(Preimage);
+  const [previousImage, setPreviousImage] = useState(Preimage);
+  const [messageApi, contextHolder] = message.useMessage();
 
   const handleChange = (info) => {
     if (info.file.status === "uploading") {
@@ -51,6 +50,11 @@ const ProfileForm = ({Preimage}) => {
   };
   // custom upload with firebase storage
   const customUpload = (options) => {
+    messageApi.open({
+      key: 'uploading',
+      type: 'loading',
+      content: 'Uploading...',
+    });
     const { onSuccess, onError, file, onProgress } = options;
     const storage = getStorage(FirebaseApp);
     const fileName = new Date().getTime() + file.name;
@@ -59,29 +63,33 @@ const ProfileForm = ({Preimage}) => {
     uploadTask.on(
       "state_changed",
       (snapshot) => {
-        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         onProgress({ percent: progress });
       } /* progress */,
       (error) => {
         onError(error);
-      }
-      /* error */,
-      () => {
+      },
+      /* error */ () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          if (Preimage) {
-            const desertRef = ref(storage, Preimage);
-            deleteObject(desertRef).then(() => {
-              console.log("deleted");
-            }).catch((error) => {
-              console.log(error);
-            });
+          if (previousImage !== undefined && previousImage !== downloadURL) {
+            const desertRef = ref(storage, previousImage);
+            deleteObject(desertRef)
+              .then(() => {
+                console.log("deleted");
+              })
+              .catch((error) => {
+
+                console.log(error);
+              });            
           }
+          setPreviousImage(downloadURL);
           onSuccess(null, downloadURL);
+          messageApi.success({  key: 'uploading', content: 'Uploaded!', duration: 2 });
         });
       }
     );
   };
-
 
   const uploadButton = (
     <div>
@@ -96,7 +104,6 @@ const ProfileForm = ({Preimage}) => {
     </div>
   );
   const getFile = (e) => {
-    console.log("Upload event:", e);
     if (Array.isArray(e)) {
       return e;
     }
@@ -105,12 +112,29 @@ const ProfileForm = ({Preimage}) => {
 
   return (
     <>
+      {contextHolder}
+      <div
+        style={{
+          display: "flex",
+          marginBottom: 8,
+          alignItems: "center",
+          justifyContent: "space-between",
+          flexWrap: "wrap",
+          width: "100%",
+          padding: "1rem",
+          borderRadius: "0.5rem",
+          boxShadow: "0 0 8px rgba(13, 12, 12, 0.15)",
+          position: "relative",
+          backgroundColor: "#fff",
+        }}
+      >
       <Form.Item
         name="image"
         getValueFromEvent={getFile}
         valuePropName="fileList"
-        label="Image"
-        // rules={[{ required: true, message: "Please select an image!" }]}
+        label="Profile Image"
+        rules={[{ required: true, message: "Please select an image!" }]}
+        style={{ width: "100%",display:"flex",justifyContent:"center" }}
       >
         <Upload
           name="avatar"
@@ -119,7 +143,7 @@ const ProfileForm = ({Preimage}) => {
           showUploadList={false}
           beforeUpload={beforeUpload}
           onChange={handleChange}
-          customRequest={customUpload}
+            customRequest={customUpload}
         >
           {imageUrl ? (
             <img
@@ -134,39 +158,89 @@ const ProfileForm = ({Preimage}) => {
           )}
         </Upload>
       </Form.Item>
-      <Form.Item
-        label="Name"
-        name="name"
-        rules={[
-          {
-            required: true,
-            message: "Name is required!",
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
-      <Form.Item
-        label="designation"
-        name="designation"
-        rules={[{ required: true, message: "Designation is required!" }]}
-      >
-        <Input />
-      </Form.Item>
-
-      <Form.Item
-        label="Bio"
-        name="bio"
-        rules={[
-          {
-            required: true,
-            message: "Bio is required!",
-          },
-        ]}
-      >
-        <ReactQuill theme="snow"  />
-        {/* <TextArea showCount maxLength={200} /> */}
-      </Form.Item>
+  
+        <Form.Item
+          label="Name"
+          name="name"
+          rules={[
+            {
+              required: true,
+              message: "Name is required!",
+            },
+          ]}
+          style={{ width: "32%" }}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          label="Email"
+          name="email"
+          rules={[
+            {
+              type: "email",
+              message: "Please Enter a valid E-mail!",
+            },
+            {
+              required: true,
+              message: "Please Enter your E-mail!",
+            },
+          ]}
+          style={{ width: "32%" }}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          label="Phone"
+          name="phone"
+          rules={[
+            { required: true, message: "Phone is required!" },
+            {
+              pattern: /^[0-9]+$/,
+              message: "Please Enter a valid Phone Number!",
+            },
+          ]}
+          style={{ width: "32%" }}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          label="Address"
+          name="address"
+          rules={[{ required: true, message: "Address is required!" }]}
+          style={{ width: "32%" }}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item label="Website" name="website" style={{ width: "32%" }}>
+          <Input />
+        </Form.Item>
+        <Form.Item
+          label="designation"
+          name="designation"
+          rules={[{ required: true, message: "Designation is required!" }]}
+          style={{ width: "32%" }}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          label="Bio"
+          name="bio"
+          valuePropName="data"
+          getValueFromEvent={(event, editor) => {
+            const data = editor.getData();
+            return data;
+          }}
+          rules={[
+            {
+              required: true,
+              message: "Bio is required!",
+            },
+          ]}
+          style={{ width: "100%" }}
+        >
+          <CKEditor editor={ClassicEditor} />
+        </Form.Item>
+      </div>
     </>
   );
 };

@@ -23,15 +23,13 @@ const SignIn = () => {
         email: result.user.email,
         img: result.user.photoURL,
       });
-      // queryClient.invalidateQueries("resume");
       dispatch(loginSuccess(res.data));
       setLoadingForGoogle(false);
       window.location.href = "/dashboard";
-      // navigate("/dashboard");
     } catch (error) {
       dispatch(loginFailed());
       message.error(error.message.split(":")[1]);
-      console.log(error.message.split(":")[1]);
+      // console.log(error.message.split(":")[1]);
     }
     setLoadingForGoogle(false);
   };
@@ -40,11 +38,9 @@ const SignIn = () => {
       return await api.post("auth/sign-in", formData);
     },
     onSuccess: (data) => {
-      // queryClient.invalidateQueries("resume");
       dispatch(loginSuccess(data.data));
       message.success("Login successful");
       window.location.href = "/dashboard";
-      // navigate("/dashboard");
     },
     onError: (error) => {
       dispatch(loginFailed());
@@ -58,13 +54,12 @@ const SignIn = () => {
 
   return (
     <div
-      style={{
-        backgroundColor: "#f0f2f5",
-        height: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
+    style={{
+      display: "flex",
+      justifyContent: "center",
+      marginTop: "2rem",
+      marginBottom: "2rem",
+    }}
     >
       <Card
         bordered={false}
@@ -85,7 +80,7 @@ const SignIn = () => {
             >
               <svg
                 style={{
-                  marginRight: "1rem",
+                  marginRight: "0.5rem",
                   width: "1.5rem",
                   height: "1.5rem",
                 }}
@@ -208,9 +203,10 @@ const SignIn = () => {
             rules={[
               {
                 required: true,
-                message: "Please Choose a Username!",
+                message: "Please Enter your Username!",
               },
             ]}
+            hasFeedback
           >
             <Input size="large" />
           </Form.Item>

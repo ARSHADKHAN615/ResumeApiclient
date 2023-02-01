@@ -68,11 +68,10 @@ const SignUp = () => {
   return (
     <div
       style={{
-        backgroundColor: "#f0f2f5",
-        height: "100vh",
         display: "flex",
         justifyContent: "center",
-        alignItems: "center",
+        marginTop: "2rem",
+        marginBottom: "2rem",
       }}
     >
       <Card
@@ -217,7 +216,6 @@ const SignUp = () => {
             label="Username"
             hasFeedback
             validateStatus={validateStatus}
-            onChange={(e) => usernameExist(e.target.value)}
             help={
               validateStatus === "error" ? (
                 "Username already exist😤😤"
@@ -227,8 +225,16 @@ const SignUp = () => {
             }
             rules={[
               {
-                required: true,
-                message: "Please Choose a Username!",
+                validator: async (_, name) => {
+                  const pattern = /^[a-zA-Z0-9_]+$/;
+                  if (!name || name.length < 5 || !pattern.test(name) || name.length > 15) {
+                    setValidateStatus("")
+                    return Promise.reject(
+                      new Error("Username must be 5-15 characters long and can only contain letters, numbers and underscores!")
+                    );
+                  }
+                  usernameExist(name);
+                },
               },
             ]}
           >
@@ -247,7 +253,6 @@ const SignUp = () => {
                 message: "Please Enter your E-mail!",
               },
             ]}
-            hasFeedback
           >
             <Input size="large" />
           </Form.Item>
@@ -261,7 +266,6 @@ const SignUp = () => {
                 message: "Please Enter your Password!",
               },
             ]}
-            hasFeedback
           >
             <Input.Password size="large" />
           </Form.Item>
@@ -270,7 +274,6 @@ const SignUp = () => {
             name="confirm"
             label="Confirm Password"
             dependencies={["password"]}
-            hasFeedback
             rules={[
               {
                 required: true,

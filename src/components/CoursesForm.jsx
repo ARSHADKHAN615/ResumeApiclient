@@ -1,41 +1,31 @@
 import React from "react";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
-import { Button, Form, Input, Space, Typography } from "antd";
+import { Button, Form, Input, Typography } from "antd";
 const { Title } = Typography;
 
 const CoursesForm = () => {
   return (
     <>
-      <Title level={3}>Add your Courses</Title>
-      <Form.List
-        name="courses"
-        // rules={[
-        //   {
-        //     validator: async (_, education) => {
-        //       if (!education || education.length < 2) {
-        //         return Promise.reject(new Error("At least 2 courses"));
-        //       }
-        //     },
-        //   },
-        // ]}
-      >
+      <Title level={3}>Courses</Title>
+      <Form.List name="courses">
         {(fields, { add, remove }, { errors }) => (
           <>
             {fields.map(({ key, name, ...restField }) => (
-              <Space
+              <div
                 key={key}
-                size="middle"
                 style={{
                   display: "flex",
                   marginBottom: 8,
                   alignItems: "center",
+                  justifyContent: "space-between",
+                  flexWrap: "wrap",
                   width: "100%",
                   padding: "1rem",
                   borderRadius: "0.5rem",
                   boxShadow: "0 0 8px rgba(13, 12, 12, 0.15)",
+                  position: "relative",
+                  backgroundColor: "#fff",
                 }}
-                align="baseline"
-                wrap
               >
                 <Form.Item
                   {...restField}
@@ -47,6 +37,7 @@ const CoursesForm = () => {
                       message: "Course Name is required",
                     },
                   ]}
+                  style={{ width: "32%" }}
                 >
                   <Input placeholder="Course Name" />
                 </Form.Item>
@@ -60,23 +51,47 @@ const CoursesForm = () => {
                       message: "Certificate link is required",
                     },
                   ]}
+                  style={{ width: "32%" }}
                 >
                   <Input placeholder="Certificate link" />
                 </Form.Item>
-                <MinusCircleOutlined onClick={() => remove(name)} />
-              </Space>
+                <Form.Item
+                  {...restField}
+                  name={[name, "organization"]}
+                  label="Organization"
+                  style={{ width: "32%" }}
+                >
+                  <Input placeholder="Organization" />
+                </Form.Item>
+                <MinusCircleOutlined
+                  onClick={() => remove(name)}
+                  style={{
+                    position: "absolute",
+                    borderLeft: "1px solid #ccc",
+                    borderBottom: "1px solid #ccc",
+                    padding: "0.5rem",
+                    borderBottomLeftRadius: "0.5rem",
+                    top: 0,
+                    right: 0,
+                    cursor: "pointer",
+                    color: "#f5222d",
+                  }}
+                />
+              </div>
             ))}
-            <Form.Item>
-              <Button
-                type="dashed"
-                onClick={() => add()}
-                block
-                icon={<PlusOutlined />}
-              >
-                Add field
-              </Button>
-              <Form.ErrorList errors={errors} />
-            </Form.Item>
+            {fields.length < 4 && (
+              <Form.Item>
+                <Button
+                  type="dashed"
+                  onClick={() => add()}
+                  block
+                  icon={<PlusOutlined />}
+                >
+                  Add field
+                </Button>
+                <Form.ErrorList errors={errors} />
+              </Form.Item>
+            )}
           </>
         )}
       </Form.List>

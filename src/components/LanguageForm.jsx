@@ -6,38 +6,26 @@ const { Title } = Typography;
 const LanguageForm = () => {
   return (
     <>
-      <Title level={3}>Add your Languages</Title>
-      <Form.List
-        name="languages"
-        // rules={[
-        //   {
-        //     validator: async (_, users) => {
-        //       if (!users || users.length < 2) {
-        //         return Promise.reject(new Error("At least 2 languages"));
-        //       } else if (users.length > 4) {
-        //         return Promise.reject(new Error("At most 4 languages"));
-        //       }
-        //     },
-        //   },
-        // ]}
-      >
+      <Title level={3}>Languages</Title>
+      <Form.List name="languages">
         {(fields, { add, remove }, { errors }) => (
           <>
             {fields.map(({ key, name, ...restField }) => (
-              <Space
+              <div
                 key={key}
                 style={{
                   display: "flex",
                   marginBottom: 8,
                   alignItems: "center",
+                  justifyContent: "space-between",
+                  flexWrap: "wrap",
                   width: "100%",
                   padding: "1rem",
                   borderRadius: "0.5rem",
                   boxShadow: "0 0 8px rgba(13, 12, 12, 0.15)",
+                  position: "relative",
+                  backgroundColor: "#fff",
                 }}
-                align="baseline"
-                size="large"
-                wrap
               >
                 <Form.Item
                   {...restField}
@@ -49,6 +37,7 @@ const LanguageForm = () => {
                       message: "Language Name is required",
                     },
                   ]}
+                  style={{ width: "48%" }}
                 >
                   <Input placeholder="Language Name" />
                 </Form.Item>
@@ -62,8 +51,9 @@ const LanguageForm = () => {
                       message: "Language Level is required",
                     },
                   ]}
+                  style={{ width: "48%" }}
                 >
-                  <Select placeholder="Language Level">
+                  <Select placeholder="Language Level" style={{ width: "100%" }} allowClear>
                     <Select.Option value="beginner">Beginner</Select.Option>
                     <Select.Option value="intermediate">
                       Intermediate
@@ -72,11 +62,24 @@ const LanguageForm = () => {
                   </Select>
                 </Form.Item>
 
-                <MinusCircleOutlined onClick={() => remove(name)} />
-              </Space>
+                <MinusCircleOutlined
+                  onClick={() => remove(name)}
+                  style={{
+                    position: "absolute",
+                    borderLeft: "1px solid #ccc",
+                    borderBottom: "1px solid #ccc",
+                    padding: "0.5rem",
+                    borderBottomLeftRadius: "0.5rem",
+                    top: 0,
+                    right: 0,
+                    cursor: "pointer",
+                    color: "#f5222d",
+                  }}
+                />
+              </div>
             ))}
-            <Form.Item>
-              {fields.length < 4 && (
+            {fields.length < 4 && (
+              <Form.Item>
                 <Button
                   type="dashed"
                   onClick={() => add()}
@@ -85,9 +88,9 @@ const LanguageForm = () => {
                 >
                   Add field
                 </Button>
-              )}
-              <Form.ErrorList errors={errors} />
-            </Form.Item>
+                <Form.ErrorList errors={errors} />
+              </Form.Item>
+            )}
           </>
         )}
       </Form.List>

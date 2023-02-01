@@ -110,13 +110,13 @@ const LayoutComponent = () => {
               paddingRight: "1rem",
             }}
           >
-            <Button
+            {/* <Button
               onClick={handleClick}
               type="primary"
               style={{ marginRight: 16 }}
             >
               {isDarkMode ? "Light" : "Dark"}
-            </Button>
+            </Button> */}
             <Dropdown
               menu={{
                 items,
@@ -152,6 +152,7 @@ const LayoutComponent = () => {
           <Content
             style={{
               margin: "24px 16px 0",
+              // background: "#fff",
             }}
           >
             <div
