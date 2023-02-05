@@ -7,6 +7,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
   box-sizing: border-box;
 }
+a {
+  text-decoration: none !important;
+}
+
 .trigger {
   padding: 0 24px;
   font-size: 18px;
@@ -18,9 +22,19 @@ body {
 .trigger:hover {
   color: #1890ff;
 }
-
+.content {
+  padding: 50px;
+}
 .logo {
   height: 32px;
   margin: 16px;
   color: white;
+}
+.logo h1 {
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 32px;
+  display: inline-block;
+  vertical-align: middle;
+  font-family: 'Montserrat', sans-serif;
 }

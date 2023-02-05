@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { Button, Card, Divider, Form, Input, message } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { loginFailed, loginSuccess } from "../slices/AuthSlice";
@@ -14,7 +14,9 @@ const SignUp = () => {
   const dispatch = useDispatch();
   const [validateStatus, setValidateStatus] = useState("");
   const [loadingForGoogle, setLoadingForGoogle] = useState(false);
-
+  useEffect(() => {
+    document.title = "Sign Up | AK Resume";
+  }, []);
   const usernameExist = async (username) => {
     try {
       setValidateStatus("validating");

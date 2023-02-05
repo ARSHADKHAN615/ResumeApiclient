@@ -1,10 +1,11 @@
 import React, { useRef, useState } from "react";
 import {
-  UploadOutlined,
+  EyeOutlined,
   UserOutlined,
   ApiOutlined,
   LogoutOutlined,
   QuestionCircleOutlined,
+  ProfileOutlined,
 } from "@ant-design/icons";
 import {
   Avatar,
@@ -73,12 +74,31 @@ const LayoutComponent = () => {
     {
       key: "1",
       icon: <UserOutlined />,
-      label: <NavLink to="/" ref={ref1}>Dashboard</NavLink>,
+      label: (
+        <NavLink to="/" ref={ref1}>
+          Dashboard
+        </NavLink>
+      ),
     },
     {
       key: "2",
       icon: <ApiOutlined />,
-      label: <NavLink to="/get-api" ref={ref2}> Get API</NavLink>,
+      label: (
+        <NavLink to="/get-api" ref={ref2}>
+          {" "}
+          Get API
+        </NavLink>
+      ),
+    },
+    {
+      key: "3",
+      icon: <ProfileOutlined />,
+      label: (
+        <NavLink to="/template" ref={ref2}>
+          {" "}
+          Template
+        </NavLink>
+      ),
     },
   ];
 
@@ -89,14 +109,20 @@ const LayoutComponent = () => {
       }}
     >
       <Layout style={{ minHeight: "100vh" }}>
-        <Sider breakpoint="lg" collapsedWidth="0" >
+        <Sider breakpoint="lg" collapsedWidth="0">
           <div className="logo">
             <h1> AK Resume</h1>
           </div>
           <Menu
             theme="dark"
             mode="inline"
-            defaultSelectedKeys={ useLocation().pathname === "/dashboard" ? ["1"] : ["2"]}
+            defaultSelectedKeys={
+              useLocation().pathname === "/dashboard"
+                ? ["1"]
+                : useLocation().pathname === "/get-api"
+                ? ["2"]
+                : ["3"]
+            }
             items={NavItems}
           />
         </Sider>
@@ -117,6 +143,14 @@ const LayoutComponent = () => {
             >
               {isDarkMode ? "Light" : "Dark"}
             </Button> */}
+            <Button
+              onClick={() => (window.open("resume/"+authUserName, "_blank"))}
+              type="primary"
+              icon={<EyeOutlined />}
+              style={{ marginRight: 16 }}
+            >
+              View Resume
+            </Button>
             <Dropdown
               menu={{
                 items,
@@ -127,7 +161,8 @@ const LayoutComponent = () => {
                       .then((res) => {
                         if (res.status === 200) {
                           dispatch(logout());
-                          document.cookie = "access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                          document.cookie =
+                            "access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
                           window.location.href = "/sign-in";
                           // navigate("/sign-in");
                         }
@@ -138,11 +173,14 @@ const LayoutComponent = () => {
               }}
               placement="bottomLeft"
               arrow
-                
             >
               <Avatar
                 size="large"
-                src={UserImage ? UserImage : `https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=${authUserName}`}
+                src={
+                  UserImage
+                    ? UserImage
+                    : `https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=${authUserName}`
+                }
                 icon={<UserOutlined />}
                 style={{ cursor: "pointer" }}
                 ref={ref3}

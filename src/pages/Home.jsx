@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   UserOutlined,
   SaveOutlined,
@@ -12,7 +12,7 @@ import {
   BulbOutlined,
   DatabaseOutlined,
 } from "@ant-design/icons";
-import { Button, Form, Space, Tabs, message } from "antd";
+import { Button, Form, Space, Spin, Tabs, message } from "antd";
 import ProfileForm from "../components/ProfileForm";
 import SkillsForms from "../components/SkillsForms";
 import EducationForm from "../components/EducationForm";
@@ -32,16 +32,18 @@ import { useNavigate } from "react-router-dom";
 const Home = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
   const authUserId = useSelector((state) => state.auth.currentUser?._id);
-
+  useEffect(() => {
+    document.title = "Dashboard | AK Resume";
+  }, []);
   const [form] = Form.useForm();
 
   const getResumeData = async () => {
     return (await api.get("resume/" + authUserId)).data;
   };
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading,isFetching } = useQuery({
     queryKey: ["resume"],
     queryFn: getResumeData,
     onError: (error) => {
@@ -76,7 +78,19 @@ const Home = () => {
   };
 
   if (isLoading) {
-    return <h1>Loading....</h1>;
+    return (
+      <Space
+        direction="vertical"
+        style={{
+          width: "100%",
+        }}
+        size="large"
+      >
+        <Spin tip="Loading..." size="large">
+          <div className="content" />
+        </Spin>
+      </Space>
+    );
   }
   const { image, experience, education, ...others } = data;
 
@@ -105,7 +119,6 @@ const Home = () => {
     education: newEducation,
     experience: newExperience,
   };
-
   const operations = (
     <Space>
       <Button
@@ -117,16 +130,6 @@ const Home = () => {
       >
         Save
       </Button>
-      {/* <Button
-        type="primary"
-        size="middle"
-        icon={<CloseCircleOutlined />}
-        danger
-        htmlType="reset"
-        // onClick={() => form.resetFields()}
-      >
-        Cancel
-      </Button> */}
     </Space>
   );
   const Components = [
@@ -240,11 +243,13 @@ const Home = () => {
       onFinishFailed={onFinishFailed}
       autoComplete="off"
     >
+      <Spin spinning={submitBtn} tip="Saving...">
       <Tabs
         tabBarExtraContent={operations}
         defaultActiveKey="1"
         items={Components}
-      />
+        />
+      </Spin>
     </Form>
   );
 };

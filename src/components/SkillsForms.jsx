@@ -2,6 +2,8 @@ import { Form, Select, Typography } from "antd";
 import { InfoCircleOutlined } from "@ant-design/icons";
 import React from "react";
 const { Title } = Typography;
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 const SkillsForms = () => {
   const options = [
     "HTML",
@@ -63,6 +65,25 @@ const SkillsForms = () => {
             placeholder="Skills"
             options={options}
           />
+        </Form.Item>
+
+        <Form.Item
+          label="Achievements"
+          name="achievements"
+          valuePropName="data"
+          getValueFromEvent={(event, editor) => {
+            const data = editor.getData();
+            return data;
+          }}
+          rules={[
+            {
+              required: true,
+              message: "Achievements is required!",
+            },
+          ]}
+          style={{ width: "100%" }}
+        >
+          <CKEditor editor={ClassicEditor} />
         </Form.Item>
       </div>
     </>

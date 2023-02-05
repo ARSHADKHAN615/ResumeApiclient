@@ -1,5 +1,5 @@
 import { Button, Card, Divider, Form, Input, message } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { auth, provider } from "../firebaseConfig";
@@ -13,7 +13,9 @@ const SignIn = () => {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const [loadingForGoogle, setLoadingForGoogle] = useState(false);
-
+  useEffect(() => {
+    document.title = "Sign In | AK Resume";
+ }, []);
   const signInGoogle = async () => {
     try {
       setLoadingForGoogle(true);

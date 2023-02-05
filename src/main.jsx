@@ -5,8 +5,12 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { persistor, store } from "./redux-store/store";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
-
-
+// import TagManager from 'react-gtm-module'
+ 
+// const tagManagerArgs = {
+//     gtmId: 'GTM-558QHFW'
+// }
+// TagManager.initialize(tagManagerArgs)
 
 // Create a client
 const queryClient = new QueryClient({

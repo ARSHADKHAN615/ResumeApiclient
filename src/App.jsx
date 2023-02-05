@@ -5,6 +5,7 @@ import LayoutComponent from "./utils/Layout";
 import "./index.css";
 import { Button, Result } from "antd";
 import GuestWrap from "./utils/GuestWrap";
+import Resume from "./pages/Resume";
 
 const App = () => {
   return (
@@ -17,6 +18,13 @@ const App = () => {
             <GuestWrap>
               <SignIn />
             </GuestWrap>
+          }
+        />
+        <Route
+          exact
+          path="/resume/:username"
+          element={
+              <Resume />
           }
         />
         <Route

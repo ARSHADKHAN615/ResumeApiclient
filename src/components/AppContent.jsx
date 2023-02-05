@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import Home from "../pages/Home";
 import GetApi from "../pages/GetApi";
 import AuthWrap from "../utils/AuthWrap";
+import TemplateChange from "../pages/TemplateChange";
 
 const AppContent = () => {
   return (
@@ -21,6 +22,14 @@ const AppContent = () => {
           element={
             <AuthWrap>
               <GetApi />
+            </AuthWrap>
+          }
+        />
+        <Route
+          path="/template"
+          element={
+            <AuthWrap>
+              <TemplateChange />
             </AuthWrap>
           }
         />
