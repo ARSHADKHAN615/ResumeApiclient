@@ -3,7 +3,7 @@ import "./styles/Template1.css";
 import dayjs from "dayjs";
 import parse from "html-react-parser";
 import html2pdf from "html2pdf.js/dist/html2pdf.min";
-import { Spin } from "antd";
+import { Avatar, Spin } from "antd";
 const Template1 = ({
   name,
   designation,
@@ -47,13 +47,13 @@ const Template1 = ({
       margin: 0,
       filename: "ArshadResume.pdf",
       image: { type: "jpeg", quality: 0.98 },
-      enableLinks: true,
-      html2canvas: { scale: 5 },
-      useCORS: true,
+      pagebreak: { mode: ["avoid-all", "css", "legacy"] },
+      html2canvas: { scale: 2 },
       jsPDF: { unit: "in", format: "a4", orientation: "portrait" },
     };
     setIsPrint(true);
-    html2pdf(componentRef.current, opt);
+    const pro = html2pdf(componentRef.current, opt);
+    console.log(pro);
     setIsGenerating(false);
   };
 
@@ -127,12 +127,14 @@ const Template1 = ({
                   <div className="home_container text-center my-3">
                     <div className="home_data">
                       <a href="#">
-                        <img
+                        <Avatar   className="profile_img"
+                          id="profile-img" src={imageBase64} />
+                        {/* <img
                           src={imageBase64 ? imageBase64 : "/img/profile.png"}
                           alt=""
                           className="profile_img"
                           id="profile-img"
-                        />
+                        /> */}
                       </a>
                       <h1 className="profile_title" id="profile-name">
                         {name}
@@ -154,11 +156,13 @@ const Template1 = ({
                           <i className="bx bxs-map mr-2"></i> {address}
                         </a>
                       </span>
+                      {website && (
                       <span className="home_info" style={{ margin: 0 }}>
                         <a href={website} className="contact_link">
                           <i className="bx bx-globe   mr-2"></i> {website}
                         </a>
                       </span>
+                      )}
                       <span className="home_info" style={{ margin: 0 }}>
                         <a
                           href={`mailto:${email}`}

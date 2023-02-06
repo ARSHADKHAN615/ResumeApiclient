@@ -39,33 +39,38 @@ const LayoutComponent = () => {
   const ref1 = useRef(null);
   const ref2 = useRef(null);
   const ref3 = useRef(null);
+  const ref4 = useRef(null);
 
   const steps = [
     {
       title: "Dashboard",
       description: "Edit your Resume here.",
+      arrow: false,
       target: () => ref1.current,
     },
     {
       title: "Get API",
-      description: "Generate your API key here.",
+      description: "Generate your Public API here.",
+      arrow: false,
       target: () => ref2.current,
+    },
+    {
+      title: "Template",
+      description: "Choose your template here.",
+      arrow: false,
+      target: () => ref3.current,
     },
     {
       title: "User Profile",
       description: "Hover over the avatar to see your Menu.",
-      target: () => ref3.current,
+      arrow: false,
+      target: () => ref4.current,
     },
   ];
 
   const items = [
-    // {
-    //   key: "1",
-    //   label: "Profile",
-    //   icon: <UserOutlined />,
-    // },
     {
-      key: "2",
+      key: "1",
       label: "Logout",
       icon: <LogoutOutlined />,
     },
@@ -94,7 +99,7 @@ const LayoutComponent = () => {
       key: "3",
       icon: <ProfileOutlined />,
       label: (
-        <NavLink to="/template" ref={ref2}>
+        <NavLink to="/template" ref={ref3}>
           {" "}
           Template
         </NavLink>
@@ -109,12 +114,18 @@ const LayoutComponent = () => {
       }}
     >
       <Layout style={{ minHeight: "100vh" }}>
-        <Sider breakpoint="lg" collapsedWidth="0">
+        <Sider
+          breakpoint="lg"
+          collapsedWidth="0"
+          style={{
+            backgroundColor: "#fff",
+            // boxShadow: "0 0 8px rgba(13, 12, 12, 0.15)",
+          }}
+        >
           <div className="logo">
             <h1> AK Resume</h1>
           </div>
           <Menu
-            theme="dark"
             mode="inline"
             defaultSelectedKeys={
               useLocation().pathname === "/dashboard"
@@ -134,6 +145,8 @@ const LayoutComponent = () => {
               alignItems: "center",
               justifyContent: "flex-end",
               paddingRight: "1rem",
+              backgroundColor: "#fff",
+              boxShadow: "0 0 8px rgba(13, 12, 12, 0.15)",
             }}
           >
             {/* <Button
@@ -144,7 +157,7 @@ const LayoutComponent = () => {
               {isDarkMode ? "Light" : "Dark"}
             </Button> */}
             <Button
-              onClick={() => (window.open("resume/"+authUserName, "_blank"))}
+              onClick={() => window.open("resume/" + authUserName, "_blank")}
               type="primary"
               icon={<EyeOutlined />}
               style={{ marginRight: 16 }}
@@ -164,7 +177,6 @@ const LayoutComponent = () => {
                           document.cookie =
                             "access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
                           window.location.href = "/sign-in";
-                          // navigate("/sign-in");
                         }
                       })
                       .catch((err) => console.log(err));
@@ -183,7 +195,7 @@ const LayoutComponent = () => {
                 }
                 icon={<UserOutlined />}
                 style={{ cursor: "pointer" }}
-                ref={ref3}
+                ref={ref4}
               />
             </Dropdown>
           </Header>
@@ -207,7 +219,7 @@ const LayoutComponent = () => {
               textAlign: "center",
             }}
           >
-            Arshad khan ©2023
+            Arshad khan © {new Date().getFullYear()}
           </Footer>
         </Layout>
         <FloatButton

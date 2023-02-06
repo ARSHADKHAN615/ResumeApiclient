@@ -7,7 +7,7 @@ const { Title } = Typography;
 const ProjectForm = () => {
   return (
     <>
-      <Title level={3}>Frontend Projects</Title>
+      <Title level={3}>Projects</Title>
       <Form.List name="frontEnd">
         {(fields, { add, remove }, { errors }) => (
           <>
@@ -116,7 +116,7 @@ const ProjectForm = () => {
           </>
         )}
       </Form.List>
-      <Title level={3}>Full Stack Projects</Title>
+      {/* <Title level={3}>Full Stack Projects</Title>
       <Form.List name="fullStack">
         {(fields, { add, remove }, { errors }) => (
           <>
@@ -224,7 +224,7 @@ const ProjectForm = () => {
             )}
           </>
         )}
-      </Form.List>
+      </Form.List> */}
     </>
   );
 };

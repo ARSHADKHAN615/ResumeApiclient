@@ -5,7 +5,6 @@ import { Button, Result, Space, Spin, message } from "antd";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { api } from "../api";
-import { logout } from "../slices/AuthSlice";
 
 const Resume = () => {
   const dispatch = useDispatch();
@@ -49,7 +48,6 @@ const Resume = () => {
       />
     );
   }
-  console.log(data);
   return (
     <div
       style={{
@@ -73,8 +71,7 @@ const Resume = () => {
           __html: `@import url('https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css')`,
         }}
       />
-      {(data.template === "1" ||data.template === "2") && <Template1 {...data} />  }
-      {/* <Template1 {...data} /> */}
+      {(data.template === "1") && <Template1 {...data} />  }
     </div>
   );
 };

@@ -5,11 +5,8 @@ const SocialForm = () => {
   const socialOptions = [
     { value: "github", label: "Github" },
     { value: "linkedin", label: "Linkedin" },
-    { value: "facebook", label: "Facebook" },
     { value: "twitter", label: "Twitter" },
-    { value: "instagram", label: "Instagram" },
     { value: "youtube", label: "Youtube" },
-    { value: "website", label: "Website" },
     { value: "leetcode", label: "Leetcode" },
   ]
   return (

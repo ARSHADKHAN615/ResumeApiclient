@@ -119,6 +119,7 @@ const Home = () => {
     education: newEducation,
     experience: newExperience,
   };
+  
   const operations = (
     <Space>
       <Button

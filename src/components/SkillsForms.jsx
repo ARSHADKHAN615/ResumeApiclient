@@ -14,6 +14,21 @@ const SkillsForms = () => {
     "MongoDB",
     "Laravel",
     "MySql",
+    "PHP",
+    "Python",
+    "Django",
+    "C++",
+    "C",
+    "Java",
+    "Android-Studio",
+    "Flutter",
+    "ExpressJs",
+    "Dart",
+    "Firebase",
+    "AWS",
+    "GCP",
+    "Git",
+    "GitHub",
   ].map((skill) => ({ label: skill, value: skill }));
 
   return (
@@ -41,9 +56,9 @@ const SkillsForms = () => {
             { required: true, message: "Skills is required" },
             {
               validator: async (_, education) => {
-                if (!education || education.length > 10) {
+                if (!education || education.length > 15) {
                   return Promise.reject(
-                    new Error("Maximum 11 Skills are allowed")
+                    new Error("Maximum 15 Skills are allowed")
                   );
                 }
               },
