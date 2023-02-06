@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { Button, Form, Radio, Typography, message } from "antd";
-import React from "react";
+import React, { useEffect } from "react";
 import { api } from "../api";
 import { useDispatch, useSelector } from "react-redux";
 import { loginSuccess } from "../slices/AuthSlice";
@@ -10,6 +10,11 @@ const TemplateChange = () => {
   const dispatch = useDispatch();
   const authUserId = useSelector((state) => state.auth.currentUser?._id);
   const authUserTemplate = useSelector( (state) => state.auth.currentUser?.template);
+  
+  useEffect(() => {
+    document.title = "Templates | AK Resume";
+  }, []);
+  
   const { mutate: generateApi, isLoading: submitBtn } = useMutation({
     mutationFn: async (value) => {
       return await api.put("user/change-template/" + authUserId, value);
