@@ -168,7 +168,7 @@ const LayoutComponent = () => {
               menu={{
                 items,
                 onClick: ({ key }) => {
-                  if (key === "2") {
+                  if (key === "1") {
                     api
                       .get("auth/logout")
                       .then((res) => {
