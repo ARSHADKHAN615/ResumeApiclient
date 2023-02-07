@@ -4,17 +4,20 @@ import React, { useEffect } from "react";
 import { api } from "../api";
 import { useDispatch, useSelector } from "react-redux";
 import { loginSuccess } from "../slices/AuthSlice";
+import { GithubOutlined } from "@ant-design/icons";
 const { Title } = Typography;
 
 const TemplateChange = () => {
   const dispatch = useDispatch();
   const authUserId = useSelector((state) => state.auth.currentUser?._id);
-  const authUserTemplate = useSelector( (state) => state.auth.currentUser?.template);
-  
+  const authUserTemplate = useSelector(
+    (state) => state.auth.currentUser?.template
+  );
+
   useEffect(() => {
     document.title = "Templates | AK Resume";
   }, []);
-  
+
   const { mutate: generateApi, isLoading: submitBtn } = useMutation({
     mutationFn: async (value) => {
       return await api.put("user/change-template/" + authUserId, value);
@@ -48,7 +51,24 @@ const TemplateChange = () => {
         backgroundColor: "#fff",
       }}
     >
-      <Title level={3}>Select Template</Title>
+      <Title level={3}>
+        Select Template
+        <Button
+          type="primary"
+          href="https://github.com/ARSHADKHAN615/ResumeApiclient/tree/master/src/templates"
+          target="_blank"
+          rel="noreferrer"
+          icon={<GithubOutlined />}
+          style={{
+            marginLeft: "1rem",
+            backgroundColor: "#000",
+            borderColor: "#000",
+            color: "#fff",
+          }}
+        >
+          You can also contribute in templates
+        </Button>
+      </Title>
       <Form
         name="basic"
         layout="vertical"
@@ -61,10 +81,15 @@ const TemplateChange = () => {
           <Radio.Group buttonStyle="solid">
             <Radio.Button value="1">Template 1</Radio.Button>
             <Radio.Button value="2" disabled>Template 2</Radio.Button>
-            <Radio.Button value="3" disabled>Template 3</Radio.Button>
-            <Radio.Button value="4" disabled>Template 4</Radio.Button>
+            <Radio.Button value="3" disabled>
+              Template 3
+            </Radio.Button>
+            <Radio.Button value="4" disabled>
+              Template 4
+            </Radio.Button>
           </Radio.Group>
         </Form.Item>
+
         <Button type="primary" htmlType="submit" loading={submitBtn}>
           Select Template
         </Button>

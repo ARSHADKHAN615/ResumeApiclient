@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import parse from "html-react-parser";
 import html2pdf from "html2pdf.js/dist/html2pdf.min";
 import { Avatar, Spin } from "antd";
+import { useParams } from "react-router-dom";
 const Template1 = ({
   name,
   designation,
@@ -25,8 +26,8 @@ const Template1 = ({
 }) => {
   const componentRef = useRef(null);
   const [isPrint, setIsPrint] = React.useState(false);
-  const [isGenerating, setIsGenerating] = React.useState(true);
   const [imageBase64, setImageBase64] = useState("");
+  const username = useParams().username;
   const fetchImage = async () => {
     const response = await fetch(image);
     const blob = await response.blob();
@@ -42,7 +43,6 @@ const Template1 = ({
   }, []);
 
   const generatePDF = () => {
-    setIsGenerating(true);
     const opt = {
       margin: 0,
       filename: "ArshadResume.pdf",
@@ -54,11 +54,15 @@ const Template1 = ({
     setIsPrint(true);
     const pro = html2pdf(componentRef.current, opt);
     console.log(pro);
-    setIsGenerating(false);
   };
 
   return (
     <div className={template == 1 ? "light-theme" : "dark-theme"}>
+          <style
+        dangerouslySetInnerHTML={{
+          __html: `@import url('https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css')`,
+        }}
+      />
       <div className={isPrint ? "scale-cv" : ""} ref={componentRef}>
         {/* <!-- SCROLLTOP  --> */}
         <span className="scrolltop justify-content-center align-items-center text-decoration-none">
@@ -306,7 +310,7 @@ const Template1 = ({
                 </section>
 
                 <a
-                  href="https://arshadkhan.me/MyResume"
+                  href={`${window.location.origin}/resume/${username}`}
                   target="_ars"
                   className="site-link"
                 >

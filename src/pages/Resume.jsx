@@ -5,6 +5,7 @@ import { Button, Result, Space, Spin, message } from "antd";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { api } from "../api";
+import Template2 from "../templates/Template2";
 
 const Resume = () => {
   const dispatch = useDispatch();
@@ -12,7 +13,7 @@ const Resume = () => {
   const queryClient = useQueryClient();
 
   const getResumeData = async () => {
-    return (await api.get("template/"+username)).data;
+    return (await api.get("template/" + username)).data;
   };
 
   const { data, isLoading, isError, isFetching } = useQuery({
@@ -44,7 +45,14 @@ const Resume = () => {
         status="500"
         title="500"
         subTitle="Sorry, something went wrong."
-        extra={<Button type="primary" onClick={() => window.location.href = "/dashboard"}>Back Home</Button>}
+        extra={
+          <Button
+            type="primary"
+            onClick={() => (window.location.href = "/dashboard")}
+          >
+            Back Home
+          </Button>
+        }
       />
     );
   }
@@ -66,12 +74,8 @@ const Resume = () => {
       >
         Refresh
       </Button>
-      <style
-        dangerouslySetInnerHTML={{
-          __html: `@import url('https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css')`,
-        }}
-      />
-      {(data.template === "1") && <Template1 {...data} />  }
+      {data.template === "1" && <Template1 {...data} />}
+      {data.template === "2" && <Template2 {...data} />}
     </div>
   );
 };
